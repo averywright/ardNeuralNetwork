@@ -1,0 +1,159 @@
+import numpy as np
+import random
+import math
+
+
+def relu(x):
+	if x > 0:
+		return x
+	else:
+		return 0
+
+
+def deriv(x):
+	if x > 0:
+		return 1
+	else:
+		return 0
+
+
+def derivativeBias(x, y, z, g, h):
+	dc = z - h
+	da = deriv(np.dot(x, y) + g)
+	db = dc * da
+	return db
+
+
+def derivativeWeights(x, y, z, g, h):
+	dc = z - h
+	da = deriv(np.dot(x, y) + g)
+	dz = x
+	dw = dz * dc * da
+	return dw
+
+
+weights = np.random.rand(45,1)
+counter = 0
+for i in weights:
+	counter += 1
+	g = random.randint(0,1)
+	weights[counter - 1] += 1
+	if g == 1:
+		weights[counter-1] = weights[counter-1] * -1
+
+bias = 10
+
+brewersRuns = np.array([.20,.12,.1,.497,.32,.1189,.1055,.159,.250,.55,.4,.43,.152,.20,.9,.109,.292,.237,.315,.419,.734,.20,.17,.982,.297, .360,.186,.234,.248,.482,.247,0.7,.256,.58,.863,.319,.234,.479,.234,0.92,.13,0.7,.123, 0, .65-1.28977])
+marlinsRuns = np.array([14,17,4,4.13,31,1169,1041,128,248,44,7,30,123,16,5,101,276,.238,.314,.380,.695,18,27,.984,29.5, 38.2,.170,.226,.311,.537,.222,3.4,34.3,5.5,90.4,46.4,19.8,47.7,30.2,0.91,1.1,0.7,11.2, 1, 6.5-12.8977])
+
+redsRuns = np.array([8,24,5,4.13,32,1161,1035,132,226,55,2,26,128,11,6,96,300,.218,.293,.351,.644,12,23,.989,30.0,28.0,.284,.346,.422,.769,.330,3.2,18.9,7.9,85.8,30.8,20.7,48.9,20.7,0.98,-0.6,-0.3,-5.3, 0,8-1.07016])
+piratesRuns = np.array([13,18,3,3.65,31,1139,1020,113,240,43,7,25,104,11,6,103,270,.235,.306,.365,.671,27,20,.975,27.6, 30.2,.256,.345,.397,.742,.330,1.4,23.0,12.2,88.5,36.7,22.2,34.4,33.3,0.53,-0.3,-0.1,-5.3,1,8-1.07016])
+
+
+astrosRuns = np.array([21,11,1,4.09,32,1195,1055,131,236,51,3,40,128,14,6,123,259,.224,.306,.391,.697,12,28,.989,29.6, 31.1,.219,.321,.412,.733,.267,3.8,26.0,12.2,89.9,43.0,31.3,25.0,30.0,0.34,0.1,0.2,2.8, 0, (8-5.01496212)])
+nationalsRuns = np.array([11,22,5,4.12,33,1223,1101,136,278,54,1,24,130,10,5,96,244,.252,.317,.369,.685,26,21,.978,29.6, 32.1,.227,.326,.294,.620,.280,0.7,18.8,10.9,87.8,33.0,22.3,71.3,4.3,2.58,0.5,0.3,5.7, 1, (8-5.01496212)])
+
+counter = 0
+for i in brewersRuns:
+	counter += 1
+	if i > 1 and i < 10:
+		brewersRuns[counter-1] = i / 10
+	elif i > 10 and i < 100:
+		brewersRuns[counter - 1] = i / 100
+	elif i > 100 and i < 1000:
+		brewersRuns[counter - 1] = i / 1000
+	elif i > 1000 and i < 10000:
+		brewersRuns[counter - 1] = i / 10000
+counter = 0
+for i in marlinsRuns:
+	counter += 1
+	if i > 1 and i < 10:
+		marlinsRuns[counter-1] = i / 10
+	elif i > 10 and i < 100:
+		marlinsRuns[counter - 1] = i / 100
+	elif i > 100 and i < 1000:
+		marlinsRuns[counter - 1] = i / 1000
+	elif i > 1000 and i < 10000:
+		marlinsRuns[counter - 1] = i / 10000
+counter = 0
+for i in astrosRuns:
+	counter += 1
+	if i > 1 and i < 10:
+		astrosRuns[counter-1] = i / 10
+	elif i > 10 and i < 100:
+		astrosRuns[counter - 1] = i / 100
+	elif i > 100 and i < 1000:
+		astrosRuns[counter - 1] = i / 1000
+	elif i > 1000 and i < 10000:
+		astrosRuns[counter - 1] = i / 10000
+counter = 0
+for i in redsRuns:
+	counter += 1
+	if i > 1 and i < 10:
+		redsRuns[counter-1] = i / 10
+	elif i > 10 and i < 100:
+		redsRuns[counter - 1] = i / 100
+	elif i > 100 and i < 1000:
+		redsRuns[counter - 1] = i / 1000
+	elif i > 1000 and i < 10000:
+		redsRuns[counter - 1] = i / 10000
+counter = 0
+for i in piratesRuns:
+	counter += 1
+	if i > 1 and i < 10:
+		piratesRuns[counter-1] = i / 10
+	elif i > 10 and i < 100:
+		piratesRuns[counter - 1] = i / 100
+	elif i > 100 and i < 1000:
+		piratesRuns[counter - 1] = i / 1000
+	elif i > 1000 and i < 10000:
+		piratesRuns[counter - 1] = i / 10000
+counter = 0
+for i in nationalsRuns:
+	counter += 1
+	if i > 1 and i < 10:
+		nationalsRuns[counter-1] = i / 10
+	elif i > 10 and i < 100:
+		nationalsRuns[counter - 1] = i / 100
+	elif i > 100 and i < 1000:
+		nationalsRuns[counter - 1] = i / 1000
+	elif i > 1000 and i < 10000:
+		nationalsRuns[counter - 1] = i / 10000
+
+		
+LR = .001
+for i in range(1000000):
+
+	actual = relu(np.dot(brewersRuns, weights) + bias)
+	
+	weights = weights - np.reshape(.0005 * derivativeWeights(brewersRuns, weights, actual, bias, 2),
+	                               (45, 1)) * LR
+	bias -= .009 * derivativeBias(brewersRuns, weights, actual, bias, 2) * LR
+	
+	actual = relu(np.dot(marlinsRuns, weights) + bias)
+	weights = weights - np.reshape(.0005 * derivativeWeights(marlinsRuns, weights, actual, bias, 1),
+	                               (45, 1)) * LR
+	bias -= .009 * derivativeBias(marlinsRuns, weights, actual, bias, 1)* LR
+	
+	actual = relu(np.dot(redsRuns, weights) + bias)
+	weights = weights - np.reshape(.0005 * derivativeWeights(redsRuns, weights, actual, bias, 8),
+	                               (45, 1))* LR
+	bias -= .009 * derivativeBias(redsRuns, weights, actual, bias, 8)* LR
+	
+	actual = relu(np.dot(piratesRuns, weights) + bias)
+	weights = weights - np.reshape(.0005 * derivativeWeights(piratesRuns, weights, actual, bias, 2),
+	                               (45, 1))* LR
+	bias -= .009 * derivativeBias(piratesRuns, weights, actual, bias, 2)* LR
+	
+	actual = relu(np.dot(astrosRuns, weights) + bias)
+	weights = weights - np.reshape(.0005 * derivativeWeights(astrosRuns, weights, actual, bias, 6),
+	                               (45, 1))* LR
+	bias -= .009 * derivativeBias(astrosRuns, weights, actual, bias, 6)* LR
+	
+	actual = relu(np.dot(nationalsRuns, weights) + bias)
+	weights = weights - np.reshape(.0005 * derivativeWeights(nationalsRuns, weights, actual, bias, 1),
+	                               (45, 1))* LR
+	bias -= .009 * derivativeBias(nationalsRuns, weights, actual, bias, 1)* LR
+
+print((np.dot(brewersRuns,weights) + bias))
+print(weights, bias)
